@@ -6,6 +6,9 @@ class Product(models.Model):
     title = models.CharField(max_length=60, unique=True)
     description = models.TextField(null=True, blank=True)
 
+    class Meta:
+        ordering = ['title']
+
 
 class Stock(models.Model):
     address = models.CharField(max_length=200, unique=True)
@@ -17,6 +20,9 @@ class Stock(models.Model):
 
 
 class StockProduct(models.Model):
+    class Meta:
+        unique_together = (('stock', 'product'),)
+
     stock = models.ForeignKey(
         Stock,
         on_delete=models.CASCADE,
